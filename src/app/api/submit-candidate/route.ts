@@ -10,11 +10,11 @@ export async function POST(req: NextRequest) {
     const targetCompany = formData.get("targetCompany") as string;
     const submitterEmail = formData.get("submitterEmail") as string;
     
-    const cvFile = formData.get("cvFile") as File;
-    const linkedinFile = formData.get("linkedinFile") as File;
+    const cvFile = formData.get("cvFile") as File | null;
+    const linkedinFile = formData.get("linkedinFile") as File | null;
 
-    if (!name || !linkedin || !targetCompany || !cvFile || !linkedinFile) {
-      return NextResponse.json({ error: "Missing mandatory fields or files" }, { status: 400 });
+    if (!name && !linkedin && !targetCompany && (!cvFile || cvFile.size === 0) && (!linkedinFile || linkedinFile.size === 0)) {
+      return NextResponse.json({ error: "Please provide at least one piece of information or document" }, { status: 400 });
     }
 
     const webhookUrl = process.env.GOOGLE_WEBHOOK_URL;
@@ -24,13 +24,21 @@ export async function POST(req: NextRequest) {
     }
 
     // Convert files to base64
-    const cvBuffer = await cvFile.arrayBuffer();
-    const cvBase64 = Buffer.from(cvBuffer).toString('base64');
-    const cvExt = cvFile.name.split('.').pop() || 'pdf';
+    let cvBase64 = "", cvExt = "", cvMime = "";
+    if (cvFile && cvFile.size > 0) {
+      const cvBuffer = await cvFile.arrayBuffer();
+      cvBase64 = Buffer.from(cvBuffer).toString('base64');
+      cvExt = cvFile.name.split('.').pop() || 'pdf';
+      cvMime = cvFile.type;
+    }
 
-    const linkedInBuffer = await linkedinFile.arrayBuffer();
-    const linkedinBase64 = Buffer.from(linkedInBuffer).toString('base64');
-    const linkedinExt = linkedinFile.name.split('.').pop() || 'pdf';
+    let linkedinBase64 = "", linkedinExt = "", linkedinMime = "";
+    if (linkedinFile && linkedinFile.size > 0) {
+      const linkedInBuffer = await linkedinFile.arrayBuffer();
+      linkedinBase64 = Buffer.from(linkedInBuffer).toString('base64');
+      linkedinExt = linkedinFile.name.split('.').pop() || 'pdf';
+      linkedinMime = linkedinFile.type;
+    }
 
     // Construct JSON payload
     const payload = {
@@ -50,16 +58,16 @@ export async function POST(req: NextRequest) {
       currency: formData.get("currency") as string || "",
       notes: formData.get("notes") as string || "",
       
-      cvFile: {
+      cvFile: cvBase64 ? {
         base64: cvBase64,
-        mimeType: cvFile.type,
-        filename: `${name} - CV.${cvExt}`
-      },
-      linkedinFile: {
+        mimeType: cvMime,
+        filename: `${name || "Unknown Candidate"} - CV.${cvExt}`
+      } : null,
+      linkedinFile: linkedinBase64 ? {
         base64: linkedinBase64,
-        mimeType: linkedinFile.type,
-        filename: `${name} - LinkedIn.${linkedinExt}`
-      }
+        mimeType: linkedinMime,
+        filename: `${name || "Unknown Candidate"} - LinkedIn.${linkedinExt}`
+      } : null
     };
 
     // Send to Google Apps Script

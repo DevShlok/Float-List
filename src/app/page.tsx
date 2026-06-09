@@ -32,8 +32,8 @@ export default function Home() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!form.name || !form.linkedin || !form.targetCompany || !cvFile || !linkedinFile) {
-      setErrorMessage("Please fill out all mandatory fields and upload both files.");
+    if (!form.name && !form.linkedin && !form.targetCompany && !cvFile && !linkedinFile) {
+      setErrorMessage("Please provide at least one piece of information (Name, LinkedIn, Company, or a Document) before uploading.");
       setStatus("error");
       return;
     }
@@ -163,35 +163,35 @@ export default function Home() {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                 <div>
                   <label className="block text-[12px] font-bold tracking-wide uppercase text-[#6b7a99] mb-1.5">
-                    Candidate Name <span className="text-red-500">*</span>
+                    Candidate Name
                   </label>
-                  <input type="text" required value={form.name} onChange={e=>setForm({...form, name:e.target.value})} className="w-full h-[42px] border-[1.5px] border-[#D4E0F0] rounded-md px-3 text-[14px] outline-none bg-white text-[#111] focus:border-[#123D8D]" placeholder="Full Name" />
+                  <input type="text" value={form.name} onChange={e=>setForm({...form, name:e.target.value})} className="w-full h-[42px] border-[1.5px] border-[#D4E0F0] rounded-md px-3 text-[14px] outline-none bg-white text-[#111] focus:border-[#123D8D]" placeholder="Full Name" />
                 </div>
                 <div>
                   <label className="block text-[12px] font-bold tracking-wide uppercase text-[#6b7a99] mb-1.5">
-                    LinkedIn URL <span className="text-red-500">*</span>
+                    LinkedIn URL
                   </label>
-                  <input type="url" required value={form.linkedin} onChange={e=>setForm({...form, linkedin:e.target.value})} className="w-full h-[42px] border-[1.5px] border-[#D4E0F0] rounded-md px-3 text-[14px] outline-none bg-white text-[#111] focus:border-[#123D8D]" placeholder="https://linkedin.com/in/..." />
+                  <input type="url" value={form.linkedin} onChange={e=>setForm({...form, linkedin:e.target.value})} className="w-full h-[42px] border-[1.5px] border-[#D4E0F0] rounded-md px-3 text-[14px] outline-none bg-white text-[#111] focus:border-[#123D8D]" placeholder="https://linkedin.com/in/..." />
                 </div>
                 <div className="sm:col-span-2">
                   <label className="block text-[12px] font-bold tracking-wide uppercase text-[#6b7a99] mb-1.5">
-                    Dream Company (Target Company) <span className="text-red-500">*</span>
+                    Dream Company (Target Company)
                   </label>
-                  <input type="text" required value={form.targetCompany} onChange={e=>setForm({...form, targetCompany:e.target.value})} className="w-full h-[42px] border-[1.5px] border-[#D4E0F0] rounded-md px-3 text-[14px] outline-none bg-white text-[#111] focus:border-[#123D8D]" placeholder="e.g. HDFC Bank" />
+                  <input type="text" value={form.targetCompany} onChange={e=>setForm({...form, targetCompany:e.target.value})} className="w-full h-[42px] border-[1.5px] border-[#D4E0F0] rounded-md px-3 text-[14px] outline-none bg-white text-[#111] focus:border-[#123D8D]" placeholder="e.g. HDFC Bank" />
                 </div>
               </div>
             </div>
 
             {/* Section: Documents */}
             <div>
-              <h3 className="text-[11px] font-bold uppercase tracking-wider text-[#9ca8be] mb-4 border-b border-[#f0f0f0] pb-2">Documents <span className="text-red-500">*</span></h3>
+              <h3 className="text-[11px] font-bold uppercase tracking-wider text-[#9ca8be] mb-4 border-b border-[#f0f0f0] pb-2">Documents</h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <div>
                   <label className="block text-[12px] font-bold tracking-wide uppercase text-[#6b7a99] mb-2">
-                    LinkedIn Screenshot (PDF/Img) <span className="text-red-500">*</span>
+                    LinkedIn Screenshot (PDF/Img)
                   </label>
                   <label className="border-2 border-dashed border-[#D4E0F0] rounded-xl p-6 text-center cursor-pointer hover:border-[#123D8D] hover:bg-[#DCE5F4] bg-[#f4f7fd] transition-all block relative group">
-                    <input type="file" required accept="application/pdf,image/*" className="hidden" onChange={e => setLinkedinFile(e.target.files?.[0] || null)} />
+                    <input type="file" accept="application/pdf,image/*" className="hidden" onChange={e => setLinkedinFile(e.target.files?.[0] || null)} />
                     <UploadCloud className="w-8 h-8 text-[#123D8D] opacity-40 group-hover:opacity-80 transition-opacity mx-auto mb-2" />
                     <div className="text-[13px] font-semibold text-[#123D8D]">{linkedinFile ? 'Change File' : 'Click to upload LinkedIn file'}</div>
                     {linkedinFile && <div className="mt-2 text-[12px] font-bold text-[#111] overflow-hidden text-ellipsis whitespace-nowrap">{linkedinFile.name}</div>}
@@ -199,10 +199,10 @@ export default function Home() {
                 </div>
                 <div>
                   <label className="block text-[12px] font-bold tracking-wide uppercase text-[#6b7a99] mb-2">
-                    CV / Resume (PDF/Word) <span className="text-red-500">*</span>
+                    CV / Resume (PDF/Word)
                   </label>
                   <label className="border-2 border-dashed border-[#D4E0F0] rounded-xl p-6 text-center cursor-pointer hover:border-[#123D8D] hover:bg-[#DCE5F4] bg-[#f4f7fd] transition-all block relative group">
-                    <input type="file" required accept="application/pdf,.doc,.docx" className="hidden" onChange={e => setCvFile(e.target.files?.[0] || null)} />
+                    <input type="file" accept="application/pdf,.doc,.docx" className="hidden" onChange={e => setCvFile(e.target.files?.[0] || null)} />
                     <UploadCloud className="w-8 h-8 text-[#123D8D] opacity-40 group-hover:opacity-80 transition-opacity mx-auto mb-2" />
                     <div className="text-[13px] font-semibold text-[#123D8D]">{cvFile ? 'Change File' : 'Click to upload CV'}</div>
                     {cvFile && <div className="mt-2 text-[12px] font-bold text-[#111] overflow-hidden text-ellipsis whitespace-nowrap">{cvFile.name}</div>}
