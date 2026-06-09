@@ -13,7 +13,8 @@ export default function Home() {
     phone: "",
     email: "",
     currentCompany: "",
-    designation: "",
+    currentDesignation: "",
+    targetDesignation: "",
     location: "",
     pastRoles: "",
     qualifications: "",
@@ -56,7 +57,8 @@ export default function Home() {
       formData.append("phone", form.phone);
       formData.append("email", form.email);
       formData.append("currentCompany", form.currentCompany);
-      formData.append("designation", form.designation);
+      formData.append("currentDesignation", form.currentDesignation);
+      formData.append("targetDesignation", form.targetDesignation);
       formData.append("location", form.location);
       formData.append("pastRoles", form.pastRoles);
       formData.append("qualifications", form.qualifications);
@@ -80,7 +82,7 @@ export default function Home() {
       // Reset form
       setForm({
         name: "", linkedin: "", targetCompany: "", phone: "", email: "", 
-        currentCompany: "", designation: "", location: "", pastRoles: "", 
+        currentCompany: "", currentDesignation: "", targetDesignation: "", location: "", pastRoles: "", 
         qualifications: "", ctc: "", currency: "INR", notes: ""
       });
       setCvFile(null);
@@ -251,8 +253,12 @@ export default function Home() {
                   <input type="text" value={form.currentCompany} onChange={e=>setForm({...form, currentCompany:e.target.value})} className="w-full h-[42px] border-[1.5px] border-[#D4E0F0] rounded-md px-3 text-[14px] outline-none bg-white text-[#111] focus:border-[#123D8D]" placeholder="Company Name" />
                 </div>
                 <div>
-                  <label className="block text-[12px] font-bold tracking-wide uppercase text-[#6b7a99] mb-1.5">Designation / Role</label>
-                  <input type="text" value={form.designation} onChange={e=>setForm({...form, designation:e.target.value})} className="w-full h-[42px] border-[1.5px] border-[#D4E0F0] rounded-md px-3 text-[14px] outline-none bg-white text-[#111] focus:border-[#123D8D]" placeholder="Title" />
+                  <label className="block text-[12px] font-bold tracking-wide uppercase text-[#6b7a99] mb-1.5">Current Designation</label>
+                  <input type="text" value={form.currentDesignation} onChange={e=>setForm({...form, currentDesignation:e.target.value})} className="w-full h-[42px] border-[1.5px] border-[#D4E0F0] rounded-md px-3 text-[14px] outline-none bg-white text-[#111] focus:border-[#123D8D]" placeholder="Current Title" />
+                </div>
+                <div className="sm:col-span-2">
+                  <label className="block text-[12px] font-bold tracking-wide uppercase text-[#6b7a99] mb-1.5">Target Designation / Role to Hire</label>
+                  <input type="text" value={form.targetDesignation} onChange={e=>setForm({...form, targetDesignation:e.target.value})} className="w-full h-[42px] border-[1.5px] border-[#D4E0F0] rounded-md px-3 text-[14px] outline-none bg-white text-[#111] focus:border-[#123D8D]" placeholder="Role we are hiring for" />
                 </div>
                 <div className="sm:col-span-2">
                   <label className="block text-[12px] font-bold tracking-wide uppercase text-[#6b7a99] mb-1.5">Past Roles & Experience</label>
