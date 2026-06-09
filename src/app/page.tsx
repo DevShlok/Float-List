@@ -47,8 +47,8 @@ export default function Home() {
       formData.append("name", form.name);
       formData.append("linkedin", form.linkedin);
       formData.append("targetCompany", form.targetCompany);
-      formData.append("cvFile", cvFile);
-      formData.append("linkedinFile", linkedinFile);
+      if (cvFile) formData.append("cvFile", cvFile);
+      if (linkedinFile) formData.append("linkedinFile", linkedinFile);
       
       // We pass the email from the authenticated session
       formData.append("submitterEmail", session?.user?.email || "Unknown");
