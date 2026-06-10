@@ -157,9 +157,9 @@ export default function Home() {
               </div>
             )}
 
-            {/* Section: Mandatory */}
+            {/* Section: Main (formerly Mandatory) */}
             <div>
-              <h3 className="text-[11px] font-bold uppercase tracking-wider text-[#9ca8be] mb-4 border-b border-[#f0f0f0] pb-2">Mandatory Details</h3>
+              <h3 className="text-[11px] font-bold uppercase tracking-wider text-[#9ca8be] mb-4 border-b border-[#f0f0f0] pb-2">Optional</h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                 <div>
                   <label className="block text-[12px] font-bold tracking-wide uppercase text-[#6b7a99] mb-1.5">
@@ -209,6 +209,12 @@ export default function Home() {
                   </label>
                 </div>
               </div>
+            </div>
+
+            {/* Section: Notes (Moved up) */}
+            <div>
+              <label className="block text-[12px] font-bold tracking-wide uppercase text-[#6b7a99] mb-1.5">Additional Notes</label>
+              <textarea rows={3} value={form.notes} onChange={e=>setForm({...form, notes:e.target.value})} className="w-full border-[1.5px] border-[#D4E0F0] rounded-md p-3 text-[14px] outline-none bg-white text-[#111] focus:border-[#123D8D]" placeholder="Any extra information..."></textarea>
             </div>
 
             {/* Additional Fields Toggle */}
@@ -280,11 +286,6 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Section: Notes */}
-            <div>
-              <label className="block text-[12px] font-bold tracking-wide uppercase text-[#6b7a99] mb-1.5">Additional Notes</label>
-              <textarea rows={3} value={form.notes} onChange={e=>setForm({...form, notes:e.target.value})} className="w-full border-[1.5px] border-[#D4E0F0] rounded-md p-3 text-[14px] outline-none bg-white text-[#111] focus:border-[#123D8D]" placeholder="Any extra information..."></textarea>
-            </div>
           </div>
           )}
 
